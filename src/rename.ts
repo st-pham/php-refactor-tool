@@ -31,11 +31,13 @@ export class PhpRenameProvider implements RenameProvider {
 
 		let doRename = false;
 
+		// TODO refactor this mess ^^
 		for (const location of targets) {
 			if (!isNone(result)) {
 				const [sym, def] = result.value;
 
 				if (sym.kind === SymbolKind.Property) {
+					// TODO update getters and setters
 					// get the old name
 					const oldName = document.getText(location.range);
 					const normalized = newName.replace(/^\$/, '');
@@ -49,8 +51,15 @@ export class PhpRenameProvider implements RenameProvider {
 					|| sym.kind === SymbolKind.Interface
 					|| sym.kind === SymbolKind.Module
 				) {
+					// TODO rename file => rename class, interface, ...
+					// TODO rename folder => update namespace, ...
 					doRename = true;
-					edit.replace(location.uri, location.range.with(location.range.end.translate(0, -oldName.length)), newName);
+
+					edit.replace(
+						location.uri, 
+						location.range.with(location.range.end.translate(0, -oldName.length)), 
+						newName
+					);
 				} else {
 					edit.replace(location.uri, location.range, newName);
 				}
