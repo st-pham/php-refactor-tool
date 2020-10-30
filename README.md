@@ -1,4 +1,4 @@
-# php-refactor-tool README
+# PHP Refactor Tool
 
 - Php refactor tool help users rename their codes easily and safely.
 - Move file (WIP)
