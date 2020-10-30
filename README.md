@@ -10,6 +10,11 @@
 
 - Rename variables, properties, class, interface, ... and update the name of file or the namespace if needed
 
+Rename Class
+![Rename Class](./media/php-refactor-tool-demo-class.gif)
+
+Rename Method
+![Rename Class](./media/php-refactor-tool-demo-method.gif)
 ## Requirements
 
 If you have any requirements or dependencies, add a section describing those and how to install and configure them.
