@@ -1,5 +1,10 @@
 # PHP Refactor Tool
 
+
+[![Latest Release](https://vsmarketplacebadge.apphb.com/version-short/st-pham.php-refactor-tool.svg
+)](https://marketplace.visualstudio.com/items?itemName=st-pham.php-refactor-tool) [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/st-pham.php-refactor-tool.svg
+)](https://marketplace.visualstudio.com/items?itemName=st-pham.php-refactor-tool) [![Rating](https://vsmarketplacebadge.apphb.com/rating-short/st-pham.php-refactor-tool.svg)](https://marketplace.visualstudio.com/items?itemName=st-pham.php-refactor-tool#review-details)
+
 - Php refactor tool help users rename their codes easily and safely.
 - Move file (WIP)
 
