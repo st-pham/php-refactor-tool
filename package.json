@@ -1,7 +1,7 @@
 {
 	"name": "php-refactor-tool",
-	"displayName": "php-refactor-tool",
-	"description": "Php refactor tool",
+	"displayName": "PHP Refactor Tool",
+	"description": "Make the code refactor easier.",
 	"version": "0.0.1",
 	"publisher": "st-pham",
 	"keywords": ["refactor", "rename", "move files"],
@@ -17,7 +17,10 @@
 	"contributes": {
 		"languages": [
 			{
-				"id": "php"
+				"id": "php",
+				"extensions": [
+					".php"
+				]
 			}
 		]
 	},
