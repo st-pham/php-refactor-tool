@@ -29,5 +29,3 @@ Not yet. If you have any problems please let me know, I'll fix it as soon as pos
 - Rename files => rename class, interface, ...
 - Rename folder => update namespace and its usages
 - Move files/folders => update namespace and its usages
-
-I'm trying to complete all these functionalities.
