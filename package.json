@@ -2,9 +2,13 @@
 	"name": "php-refactor-tool",
 	"displayName": "PHP Refactor Tool",
 	"description": "Make the code refactor easier.",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"publisher": "st-pham",
-	"keywords": ["refactor", "rename", "move files"],
+	"keywords": [
+		"refactor",
+		"rename",
+		"move files"
+	],
 	"engines": {
 		"vscode": "^1.49.0"
 	},
@@ -13,7 +17,7 @@
 	],
 	"activationEvents": [
 		"onLanguage:php"
-	  ],
+	],
 	"contributes": {
 		"languages": [
 			{
