@@ -13,3 +13,7 @@
 ## 0.2.8
 
 - Do not rename symbols from vendor
+
+## 0.3.0
+
+- User can choose to update the name of getters, setters and their references when renaming properties

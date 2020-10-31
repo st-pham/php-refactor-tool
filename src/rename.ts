@@ -7,14 +7,19 @@ import {
 	SymbolKind, 
 	LocationLink, 
 	Location, 
-	Uri
+	Uri, DocumentSymbol, Range, window
 } from 'vscode';
-import { getReferences, getSymbol } from './api';
+import { getDocumentSymbols, getReferences, getSymbol } from './api';
 import { isNone } from 'fp-ts/lib/Option';
 
 const DEFAULT_VENDOR_DIR = 'vendor';
+
 const CANNOT_RENAME_ERROR_MESSAGE = 'You can not rename this symbol';
 const CANNOT_RENAME_FROM_VENDOR_ERROR_MESSAGE = 'You can not rename the symbols from vendor';
+const METHOD_NAME_DUPLICATION_ERROR_MESSAGE = 'Method name conflicts.';
+
+const UPDATE_GETTER_AND_SETTER = 'Update getter name and setter name.';
+const RENAME_PROPERTY_ONLY = 'Rename the property only.';
 
 export class PhpRenameProvider implements RenameProvider {
 
@@ -42,7 +47,9 @@ export class PhpRenameProvider implements RenameProvider {
 
 		const edit = new WorkspaceEdit();
 
-		let doRename = false;
+		const symbols = await getDocumentSymbols(document.uri);
+
+		let isGetterSetterUpdated = false;
 
 		// TODO refactor this mess ^^
 		for (const location of targets) {
@@ -50,15 +57,22 @@ export class PhpRenameProvider implements RenameProvider {
 				const [sym, def] = result.value;
 
 				if (sym.kind === SymbolKind.Property) {
+					if (!isGetterSetterUpdated) {
+						await window.showQuickPick([
+							UPDATE_GETTER_AND_SETTER,
+							RENAME_PROPERTY_ONLY
+						]).then( async (answer) => {
+							if (answer === UPDATE_GETTER_AND_SETTER) {
+								await this.updateGetterAndSetter(document, location, newName, edit, symbols);
+							}
+						});
+						isGetterSetterUpdated = true;
+					}
 					this.renameProperty(document, location, newName, edit);
-				} else if (sym.kind === SymbolKind.Class 
+				} else if (sym.kind === SymbolKind.Class
 					|| sym.kind === SymbolKind.Interface
 					|| sym.kind === SymbolKind.Module
 				) {
-					// TODO rename file => rename class, interface, ...
-					// TODO rename folder => update namespace, ...
-					doRename = true;
-
 					edit.replace(
 						location.uri, 
 						location.range.with(location.range.end.translate(0, -oldName.length)), 
@@ -83,13 +97,13 @@ export class PhpRenameProvider implements RenameProvider {
 	}
 
 	private renameProperty(document: TextDocument, location: Location, newName: string, edit: WorkspaceEdit): void {
-		const oldName = document.getText(location.range);
-		const normalized = newName.replace(/^\$/, '');
+		const actualName = document.getText(location.range);
+		const normalizedNewName = newName.replace(/^\$/, '');
 
 		edit.replace(
 			location.uri,
 			location.range,
-			oldName.includes('$') ? `$${normalized}` : normalized
+			actualName.includes('$') ? `$${normalizedNewName}` : normalizedNewName
 		);
 	}
 
@@ -103,9 +117,58 @@ export class PhpRenameProvider implements RenameProvider {
 	}
 
 	private isFromVendor(uri: Uri): boolean {
-		if (uri.path.includes(DEFAULT_VENDOR_DIR)) {
-			return true;
+		return uri.path.includes(DEFAULT_VENDOR_DIR);
+	}
+
+	private async updateGetterAndSetter(document: TextDocument, location: Location, newName: string, edit: WorkspaceEdit, symbols: DocumentSymbol[]): Promise<void> {
+		const actualName = document.getText(location.range);
+		const [actualGetterName, actualSetterName]  = this.getGetterSetterName(actualName);
+		const [newGetterName, newSetterName] = this.getGetterSetterName(newName);
+
+
+		for (const symbol of symbols) {
+			if (symbol.children.length === 0) {
+				continue;
+			}
+
+			for (const child of symbol.children) {		
+				if (child.name === newGetterName || child.name === newSetterName) {
+					throw new Error(METHOD_NAME_DUPLICATION_ERROR_MESSAGE);
+				}
+
+				if (!this.inTextEdits(document, edit, child.selectionRange) && child.name === actualGetterName) {
+					await this.renameAllReferences(document, child, edit, newGetterName);
+				} else if (!this.inTextEdits(document, edit, child.selectionRange) && child.name === actualSetterName) {
+					await this.renameAllReferences(document, child, edit, newSetterName);
+				}
+			}
+		}
+	}
+
+	private getGetterSetterName(actualName: string): string[] {
+		const normalizedName = actualName.replace(/^\$/, '');
+		const getterName = 'get' + this.upperCaseFirst(normalizedName);
+		const setterName = 'set' + this.upperCaseFirst(normalizedName);
+		return [getterName, setterName];
+	}
+
+	private async renameAllReferences(document: TextDocument, child: DocumentSymbol, edit: WorkspaceEdit, newSetterName: string): Promise<void> {
+		const targetMethods = await getReferences(document.uri, child.selectionRange.end);
+		for (const targetMethod of targetMethods) {
+			edit.replace(targetMethod.uri, targetMethod.range, newSetterName);
+		}
+	}
+
+	private inTextEdits(document: TextDocument,edit: WorkspaceEdit, range: Range): boolean {
+		for (const textEdit of edit.get(document.uri)) {
+			if (textEdit.range === range) {
+				return true;
+			}	
 		}
 		return false;
+	}
+
+	private upperCaseFirst(text: string): string {
+		return text.charAt(0).toUpperCase() + text.slice(1);
 	}
 }

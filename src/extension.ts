@@ -2,8 +2,10 @@ import { ExtensionContext, languages } from 'vscode';
 import { PhpRenameProvider } from './rename';
 
 const activate = (context: ExtensionContext) => {
-  context.subscriptions.push(languages.registerRenameProvider('php', new PhpRenameProvider()));
-  // TODO update namespace when move files and folders
+  // TODO check installation of PhpIntelephense
+  context.subscriptions.push(languages.registerRenameProvider('php', new PhpRenameProvider()));  
+  // TODO rename file => rename class, interface, ...
+	// TODO rename folder => update namespace, ...
   console.log('php-refactor is active');
 };
 

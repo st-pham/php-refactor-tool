@@ -8,7 +8,9 @@
 
 ## Features
 
-- Rename variables, properties, class, interface, ... and update the name of file or the namespace if needed.
+- Rename symbols
+    - Update the name of file or the namespace if needed in case of `Class`, `Interface`, `Abstract`, ...
+    - Update `Getter` and `Setter` when renaming `Property`
 
 Rename Class
 ![Rename Class](https://i.imgur.com/Aq0YZAB.gif)
@@ -18,7 +20,7 @@ Rename Method
 
 ## Installation
 
-- Install dependency extension
+- Install dependency extension `PHP Intelephense`
 
 - All the extensions with same functionalities should be disabled to obtain the best result.
 ## Usage
@@ -30,7 +32,6 @@ Use key `F2` or right click and choose `Rename Symbol` on the symbol you want to
 Not yet. If you have any problems please let me know, I'll fix it as soon as possible.
 
 ## TODO
-- Update getters and setters when rename properties
 - Rename files => rename class, interface, ...
-- Rename folder => update namespace and its usages
-- Move files/folders => update namespace and its usages
+- Rename folder => update namespace and its references
+- Move files/folders => update namespace and its references
