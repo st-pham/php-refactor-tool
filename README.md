@@ -16,6 +16,12 @@ Rename Class
 Rename Method
 ![Rename Method](https://i.imgur.com/BIEGjDQ.gif)
 
+## Installation
+
+- Install dependency extension
+
+- All the extensions with same functionalities should be disabled to obtain the best result.
+
 ## Usage
 
 Use key `F2` or right click and choose `Rename Symbol` on the symbol you want to rename.

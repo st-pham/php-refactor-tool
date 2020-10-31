@@ -18,6 +18,9 @@
 	"activationEvents": [
 		"onLanguage:php"
 	],
+	"extensionDependencies": [
+		"bmewburn.vscode-intelephense-client"
+	],
 	"contributes": {
 		"languages": [
 			{
