@@ -13,6 +13,8 @@ import { getReferences, getSymbol } from './api';
 import { isNone } from 'fp-ts/lib/Option';
 
 const DEFAULT_VENDOR_DIR = 'vendor';
+const CANNOT_RENAME_ERROR_MESSAGE = 'You can not rename this symbol';
+const CANNOT_RENAME_FROM_VENDOR_ERROR_MESSAGE = 'You can not rename the symbols from vendor';
 
 export class PhpRenameProvider implements RenameProvider {
 
@@ -27,20 +29,14 @@ export class PhpRenameProvider implements RenameProvider {
 		const targets = await getReferences(document.uri, position);
 
 		if (targets.length === 0) {
-			throw new Error('You can not rename this symbol');
-		}
-
-		for (const target of targets) {
-			if (this.isFromVendor(target.uri)) {
-				throw new Error('You can not rename the symbols from vendor');
-			}
+			throw new Error(CANNOT_RENAME_ERROR_MESSAGE);
 		}
 
 		const result = await getSymbol(document.uri, position);
 		if (!isNone(result)) {
 			const [sym, def] = result.value;
 			if (this.isFromVendor(def.targetUri)) {
-				throw new Error('You can not rename the symbols from vendor');
+				throw new Error(CANNOT_RENAME_FROM_VENDOR_ERROR_MESSAGE);
 			}
 		}
 
