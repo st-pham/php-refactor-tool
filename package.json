@@ -2,7 +2,7 @@
 	"name": "php-refactor-tool",
 	"displayName": "PHP Refactor Tool",
 	"description": "Make the code refactor easier.",
-	"version": "0.2.3",
+	"version": "0.2.7",
 	"publisher": "st-pham",
 	"keywords": [
 		"refactor",
@@ -17,6 +17,9 @@
 	],
 	"activationEvents": [
 		"onLanguage:php"
+	],
+	"extensionDependencies": [
+		"bmewburn.vscode-intelephense-client"
 	],
 	"contributes": {
 		"languages": [

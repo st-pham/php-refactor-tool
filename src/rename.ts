@@ -4,10 +4,15 @@ import {
 	RenameProvider,
 	TextDocument,
 	WorkspaceEdit,
-	SymbolKind, LocationLink
+	SymbolKind, 
+	LocationLink, 
+	Location, 
+	Uri
 } from 'vscode';
 import { getReferences, getSymbol } from './api';
 import { isNone } from 'fp-ts/lib/Option';
+
+const DEFAULT_VENDOR_DIR = 'vendor';
 
 export class PhpRenameProvider implements RenameProvider {
 
@@ -25,7 +30,19 @@ export class PhpRenameProvider implements RenameProvider {
 			throw new Error('You can not rename this symbol');
 		}
 
+		for (const target of targets) {
+			if (this.isFromVendor(target.uri)) {
+				throw new Error('You can not rename the symbols from vendor');
+			}
+		}
+
 		const result = await getSymbol(document.uri, position);
+		if (!isNone(result)) {
+			const [sym, def] = result.value;
+			if (this.isFromVendor(def.targetUri)) {
+				throw new Error('You can not rename the symbols from vendor');
+			}
+		}
 
 		const edit = new WorkspaceEdit();
 
@@ -37,16 +54,7 @@ export class PhpRenameProvider implements RenameProvider {
 				const [sym, def] = result.value;
 
 				if (sym.kind === SymbolKind.Property) {
-					// TODO update getters and setters
-					// get the old name
-					const oldName = document.getText(location.range);
-					const normalized = newName.replace(/^\$/, '');
-
-					edit.replace(
-						location.uri,
-						location.range,
-						oldName.includes('$') ? `$${normalized}` : normalized,
-					);
+					this.renameProperty(document, location, newName, edit);
 				} else if (sym.kind === SymbolKind.Class 
 					|| sym.kind === SymbolKind.Interface
 					|| sym.kind === SymbolKind.Module
@@ -69,13 +77,24 @@ export class PhpRenameProvider implements RenameProvider {
 		}
 
 		if (!isNone(result)) {
-			const [sym, def] = result.value;
+			const [sym, def] = result.value;			
 			if (sym.kind === SymbolKind.Class) {
 				this.renameFile(edit, def, newName);
 			}
 		}
 
 		return edit;
+	}
+
+	private renameProperty(document: TextDocument, location: Location, newName: string, edit: WorkspaceEdit): void {
+		const oldName = document.getText(location.range);
+		const normalized = newName.replace(/^\$/, '');
+
+		edit.replace(
+			location.uri,
+			location.range,
+			oldName.includes('$') ? `$${normalized}` : normalized
+		);
 	}
 
 	private renameFile(edit: WorkspaceEdit, definition: LocationLink, newName: string): void {
@@ -85,5 +104,12 @@ export class PhpRenameProvider implements RenameProvider {
 			ext: '.php'
 		});
 		edit.renameFile(definition.targetUri, definition.targetUri.with({ path: newPath }));				
+	}
+
+	private isFromVendor(uri: Uri): boolean {
+		if (uri.path.includes(DEFAULT_VENDOR_DIR)) {
+			return true;
+		}
+		return false;
 	}
 }
