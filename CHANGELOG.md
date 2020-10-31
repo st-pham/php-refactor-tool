@@ -9,3 +9,7 @@
 
 - Refactor
 - Update Docs
+
+## 0.2.8
+
+- Do not rename symbols from vendor
