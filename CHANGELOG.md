@@ -8,6 +8,7 @@
 ## 0.2.6
 
 - Refactor
+
 - Update Docs
 
 ## 0.2.8
@@ -17,3 +18,7 @@
 ## 0.3.0
 
 - User can choose to update the name of getters, setters and their references when renaming properties
+
+## 0.3.1
+
+- Fix `Interface` file is not renamed

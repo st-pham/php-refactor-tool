@@ -88,7 +88,9 @@ export class PhpRenameProvider implements RenameProvider {
 
 		if (!isNone(result)) {
 			const [sym, def] = result.value;			
-			if (sym.kind === SymbolKind.Class) {
+			if (sym.kind === SymbolKind.Class
+				|| sym.kind === SymbolKind.Interface
+				|| sym.kind === SymbolKind.Module) {
 				this.renameFile(edit, def, newName);
 			}
 		}
