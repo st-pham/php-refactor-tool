@@ -18,7 +18,7 @@
 			"preLaunchTask": "${defaultBuildTask}"
 		},
 		{
-			"name": "Extension Tests",
+			"name": "PHP Rename Provider",
 			"type": "extensionHost",
 			"request": "launch",
 			"args": [
