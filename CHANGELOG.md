@@ -22,3 +22,13 @@
 ## 0.3.1
 
 - Fix `Interface` file is not renamed
+
+## 0.4.0
+
+- Add functional tests
+
+- Update README
+
+## 0.4.1
+
+- Update CHANGELOG
