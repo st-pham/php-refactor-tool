@@ -2,10 +2,10 @@
 	"name": "php-refactor-tool",
 	"displayName": "PHP Refactor Tool",
 	"description": "Make the code refactor easier.",
-	"version": "0.3.1",
+	"version": "0.4.0",
 	"publisher": "st-pham",
 	"author": {
-		"name":"Son Tung PHAM",
+		"name": "Son Tung PHAM",
 		"email": "tungps88@gmail.com"
 	},
 	"keywords": [
