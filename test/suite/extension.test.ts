@@ -1,11 +1,8 @@
 import * as assert from 'assert';
-import { before, beforeEach, afterEach } from 'mocha';
+import { before } from 'mocha';
 import { setTimeout } from 'timers';
-
-// You can import and use all API from the 'vscode' module
-// as well as import your extension to test it
 import * as vscode from 'vscode';
-// import * as myExtension from '../extension';
+import * as utils from '../../utils/utils';
 
 suite('PHP Rename Provider', function() {
 	vscode.window.showInformationMessage('Start all tests.');
@@ -16,60 +13,46 @@ suite('PHP Rename Provider', function() {
 		setTimeout(done, 5000);
 	});
 
-	test('Should rename VARIABLE inside method', async () => {
+	test('Should rename VARIABLE inside method only', async () => {
 		const document = await getFileByName('Toto.php');
 		const position = new vscode.Position(9, 41); // position of variable $name
+		const oldName = '$name';
 		const newName = '$newVariableName';
 
 		await rename(document, position, newName);
 
-		assert.strictEqual(
-			(document.getText().match(/\$name/g) || []).length, 
-			3
-		);
-
-		assert.strictEqual(
-			(document.getText().match(/\$newVariableName/g) || []).length, 
-			2
-		);
+		assertWordOccurenceInDocument(document, '\\' + oldName, 3);
+		assertWordOccurenceInDocument(document, '\\' + newName, 2);
 	});
 
 	test('Should rename FUNCTION and its references', async () => {
 		const document = await getFileByName('Toto.php');
 		const document2 = await getFileByName('Tata.php');
-		const position = new vscode.Position(9, 28);
+		const position = new vscode.Position(9, 28); // position of method testToto
+		const oldName = 'testToto';
 		const newName = 'newFunctionName';
 
 		await rename(document, position, newName);
 
-		assert.strictEqual(
-			(document.getText().match(/newFunctionName/g) || []).length, 
-			1
-		);
-
-		assert.strictEqual(
-			(document2.getText().match(/newFunctionName/g) || []).length, 
-			1
-		);
+		assertWordOccurenceInDocument(document, newName, 1);
+		assertWordOccurenceInDocument(document, oldName, 0);
+		assertWordOccurenceInDocument(document2, newName, 1);
+		assertWordOccurenceInDocument(document2, oldName, 1);
 	});
 
 	test('Should rename CLASS, update name space, rename file and its references', async () => {
 		const document = await getFileByName('Toto.php');
 		const document2 = await getFileByName('Tata.php');
 		const position = new vscode.Position(7, 10); // position of class Toto
+		const oldName = 'Toto';
 		const newName = 'NewClassName';
 
 		await rename(document, position, newName);
 
-		assert.strictEqual(
-			(document.getText().match(/NewClassName/g) || []).length, 
-			1
-		);
-
-		assert.strictEqual(
-			(document2.getText().match(/NewClassName/g) || []).length, 
-			2
-		);
+		assertWordOccurenceInDocument(document, newName, 1);
+		assertWordOccurenceInDocument(document, 'class ' + oldName, 0);
+		assertWordOccurenceInDocument(document2, newName, 2);
+		assertWordOccurenceInDocument(document2, oldName, 1);
 		
 		assert.doesNotThrow(async () =>
 			await getFileByName(newName + '.php')
@@ -87,10 +70,7 @@ suite('PHP Rename Provider', function() {
 
 		await rename(document, position, newName);
 
-		assert.strictEqual(
-			(document.getText().match(/NewInterfaceName/g) || []).length, 
-			2
-		);
+		assertWordOccurenceInDocument(document, newName, 2);
 
 		assert.doesNotThrow(async () =>
 			await getFileByName(newName + '.php')
@@ -101,10 +81,7 @@ suite('PHP Rename Provider', function() {
 		);
 
 		const document2 = await getFileByName(newName + '.php');
-		assert.strictEqual(
-			(document2.getText().match(/NewInterfaceName/g) || []).length, 
-			1
-		);
+		assertWordOccurenceInDocument(document2, newName, 1);
 	});
 
 	test('Should rename PROPERTY, update getter and setter', async () => {
@@ -114,39 +91,23 @@ suite('PHP Rename Provider', function() {
 
 		await rename(document, position, newName);
 
-		assert.strictEqual(
-			(document.getText().match(/\$newPropertyName/g) || []).length, 
-			1
-		);
-
-		assert.strictEqual(
-			(document.getText().match(/\$this\-\>newPropertyName/g) || []).length, 
-			3
-		);
-
-		assert.strictEqual(
-			(document.getText().match(/getNewPropertyName/g) || []).length, 
-			1
-		);
-
-		assert.strictEqual(
-			(document.getText().match(/setNewPropertyName/g) || []).length, 
-			1
-		);
+		assertWordOccurenceInDocument(document, '\\$' + newName, 1);
+		assertWordOccurenceInDocument(document, '\\$this->' + newName, 3);
+		assertWordOccurenceInDocument(document, 'get' + utils.upperCaseFirst(newName), 1);
+		assertWordOccurenceInDocument(document, 'set' + utils.upperCaseFirst(newName), 1);
 
 		const document2 = await getFileByName('NewClassName.php');
-
-		assert.strictEqual(
-			(document2.getText().match(/getNewPropertyName/g) || []).length, 
-			1
-		);
-
-		assert.strictEqual(
-			(document2.getText().match(/setNewPropertyName/g) || []).length, 
-			1
-		);
+		assertWordOccurenceInDocument(document2, 'get' + utils.upperCaseFirst(newName), 1);
+		assertWordOccurenceInDocument(document2, 'set' + utils.upperCaseFirst(newName), 1);
 	});
 });
+
+function assertWordOccurenceInDocument(document: vscode.TextDocument, word: string, expectedCount: number) {
+	assert.strictEqual(
+		(document.getText().match(new RegExp(word, 'g')) || []).length,
+		expectedCount
+	);
+}
 
 async function rename(document: vscode.TextDocument, position: vscode.Position, newName: string) {
 	await vscode.window.showTextDocument(document);
@@ -159,7 +120,6 @@ async function rename(document: vscode.TextDocument, position: vscode.Position, 
 		if (!edit) {
 			throw new Error("Cannot rename");
 		}
-
 		await vscode.workspace.applyEdit(edit);
 	});
 }

@@ -18,12 +18,13 @@
 			"preLaunchTask": "${defaultBuildTask}"
 		},
 		{
-			"name": "PHP Rename Provider",
+			"name": "Run Test",
 			"type": "extensionHost",
 			"request": "launch",
 			"args": [
 				"--extensionDevelopmentPath=${workspaceFolder}",
-				"--extensionTestsPath=${workspaceFolder}/out/test/suite/index"
+				"--extensionTestsPath=${workspaceFolder}/out/test/suite/index",
+				"--launchArgs=[${workspaceFolder}/test-fixtures/test-workspace]"
 			],
 			"outFiles": [
 				"${workspaceFolder}/out/test/**/*.js"

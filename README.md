@@ -25,6 +25,7 @@ Rename Method
 - Install dependency extension `PHP Intelephense`
 
 - All the extensions with same functionalities should be disabled to obtain the best result.
+
 ## Usage
 
 Use key `F2` or right click and choose `Rename Symbol` on the symbol you want to rename.
@@ -32,8 +33,3 @@ Use key `F2` or right click and choose `Rename Symbol` on the symbol you want to
 ## Known Issues
 
 Not yet. If you have any problems please let me know, I'll fix it as soon as possible.
-
-## TODO
-- Rename files => rename class, interface, ...
-- Rename folder => update namespace and its references
-- Move files/folders => update namespace and its references
