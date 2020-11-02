@@ -32,3 +32,9 @@
 ## 0.4.1
 
 - Update CHANGELOG
+
+## 0.4.2
+
+- Refactor
+
+- Add more tests
