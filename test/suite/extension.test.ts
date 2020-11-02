@@ -1,12 +1,8 @@
 import * as assert from 'assert';
-import { before, beforeEach, afterEach } from 'mocha';
+import { before } from 'mocha';
 import { setTimeout } from 'timers';
-
-// You can import and use all API from the 'vscode' module
-// as well as import your extension to test it
 import * as vscode from 'vscode';
 import * as utils from '../../utils/utils';
-// import * as myExtension from '../extension';
 
 suite('PHP Rename Provider', function() {
 	vscode.window.showInformationMessage('Start all tests.');
