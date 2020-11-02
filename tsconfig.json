@@ -15,7 +15,8 @@
 	},
 	"include": [
 		"src",
-		"test"
+		"test",
+		"utils"
 	],
 	"exclude": [
 		"node_modules",

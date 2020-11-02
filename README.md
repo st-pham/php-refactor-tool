@@ -20,6 +20,10 @@ Rename Class
 Rename Method
 ![Rename Method](https://i.imgur.com/BIEGjDQ.gif)
 
+## Requirements
+
+- PHP Intelephense
+
 ## Installation
 
 - Install dependency extension `PHP Intelephense`

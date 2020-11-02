@@ -14,7 +14,7 @@
 	],
 	"license": "MIT",
 	"engines": {
-		"vscode": "^1.49.0"
+		"vscode": "^1.46.0"
 	},
 	"categories": [
 		"Other"
@@ -37,13 +37,13 @@
 	},
 	"main": "./out/extension.js",
 	"scripts": {
-		"vscode:prepublish": "npm run compile",
+		"vscode:prepublish": "npm run test",
 		"compile": "tsc -p ./",
 		"lint": "eslint src --ext ts",
 		"watch": "tsc -watch -p ./",
-		"pretest": "npm run compile && npm run lint && cp -Rf ./test-fixtures/fixture2/* ./test-fixtures/fixture1/",
+		"pretest": "npm run compile && npm run lint && cp -Rf ./test-fixtures/fixture/* ./test-fixtures/test-workspace/",
 		"test": "node ./out/test/runTest.js",
-		"posttest": "rm -f ./test-fixtures/fixture1/*"
+		"posttest": "rm -f ./test-fixtures/test-workspace/*.php"
 	},
 	"devDependencies": {
 		"@types/glob": "^7.1.3",

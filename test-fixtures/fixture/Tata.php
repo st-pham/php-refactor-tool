@@ -30,7 +30,7 @@ class Tata
         sprintf('Hello %s', $name);
         $toto->testToto($name);
     }
-
+    
     public function testToto(string $name): void
     {
         echo $name;

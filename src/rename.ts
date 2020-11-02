@@ -11,6 +11,7 @@ import {
 } from 'vscode';
 import { getDocumentSymbols, getReferences, getSymbol } from './api';
 import { isNone } from 'fp-ts/lib/Option';
+import * as utils from '../utils/utils';
 
 const DEFAULT_VENDOR_DIR = 'vendor';
 
@@ -138,9 +139,9 @@ export class PhpRenameProvider implements RenameProvider {
 					throw new Error(METHOD_NAME_DUPLICATION_ERROR_MESSAGE);
 				}
 
-				if (!this.inTextEdits(document, edit, child.selectionRange) && child.name === actualGetterName) {
+				if (!this.isRangeInTextEdits(document, edit, child.selectionRange) && child.name === actualGetterName) {
 					await this.renameAllReferences(document, child, edit, newGetterName);
-				} else if (!this.inTextEdits(document, edit, child.selectionRange) && child.name === actualSetterName) {
+				} else if (!this.isRangeInTextEdits(document, edit, child.selectionRange) && child.name === actualSetterName) {
 					await this.renameAllReferences(document, child, edit, newSetterName);
 				}
 			}
@@ -149,8 +150,8 @@ export class PhpRenameProvider implements RenameProvider {
 
 	private getGetterSetterName(actualName: string): string[] {
 		const normalizedName = actualName.replace(/^\$/, '');
-		const getterName = 'get' + this.upperCaseFirst(normalizedName);
-		const setterName = 'set' + this.upperCaseFirst(normalizedName);
+		const getterName = 'get' + utils.upperCaseFirst(normalizedName);
+		const setterName = 'set' + utils.upperCaseFirst(normalizedName);
 		return [getterName, setterName];
 	}
 
@@ -161,16 +162,12 @@ export class PhpRenameProvider implements RenameProvider {
 		}
 	}
 
-	private inTextEdits(document: TextDocument,edit: WorkspaceEdit, range: Range): boolean {
+	private isRangeInTextEdits(document: TextDocument,edit: WorkspaceEdit, range: Range): boolean {
 		for (const textEdit of edit.get(document.uri)) {
 			if (textEdit.range === range) {
 				return true;
 			}	
 		}
 		return false;
-	}
-
-	private upperCaseFirst(text: string): string {
-		return text.charAt(0).toUpperCase() + text.slice(1);
 	}
 }
