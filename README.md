@@ -33,3 +33,7 @@ Use key `F2` or right click and choose `Rename Symbol` on the symbol you want to
 ## Known Issues
 
 Not yet. If you have any problems please let me know, I'll fix it as soon as possible.
+
+## Run tests
+
+`npm run test`

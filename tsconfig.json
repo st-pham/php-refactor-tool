@@ -16,7 +16,7 @@
 	"include": [
 		"src",
 		"test",
-		"utils"
+		"src/utils"
 	],
 	"exclude": [
 		"node_modules",
