@@ -2,11 +2,9 @@ import * as assert from 'assert';
 import { before } from 'mocha';
 import { setTimeout } from 'timers';
 import * as vscode from 'vscode';
-import * as utils from '../../utils/utils';
+import * as utils from '../../src/utils/utils';
 
 suite('PHP Rename Provider', function() {
-	vscode.window.showInformationMessage('Start all tests.');
-
 	this.timeout(5500);
 
 	before(function(done) {
@@ -128,7 +126,7 @@ async function getFileByName(name: string): Promise<vscode.TextDocument> {
 	const files = await vscode.workspace.findFiles(name);
 
 	if (files.length === 0) {
-		throw new Error("File not found");
+		throw new Error(`File ${name} not found`);
 	}
 
 	return vscode.workspace.openTextDocument(files[0]);

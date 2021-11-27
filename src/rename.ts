@@ -11,7 +11,7 @@ import {
 } from 'vscode';
 import { getDocumentSymbols, getReferences, getSymbol } from './api';
 import { isNone } from 'fp-ts/lib/Option';
-import * as utils from '../utils/utils';
+import * as utils from './utils/utils';
 
 const DEFAULT_VENDOR_DIR = 'vendor';
 
