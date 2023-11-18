@@ -3,11 +3,11 @@
 	"displayName": "PHP Refactor Tool",
 	"description": "Make the code refactor easier.",
 	"repository": {
-		"type": "git", 
-		"url": "https://github.com/st-pham/php-refactor-tool.git" 
+		"type": "git",
+		"url": "https://github.com/st-pham/php-refactor-tool.git"
 	},
 	"icon": "images/icon.png",
-	"version": "0.5.0",
+	"version": "0.6.0",
 	"publisher": "st-pham",
 	"author": {
 		"name": "Son Tung PHAM",
