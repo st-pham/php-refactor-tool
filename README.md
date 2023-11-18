@@ -4,6 +4,7 @@
 )](https://marketplace.visualstudio.com/items?itemName=st-pham.php-refactor-tool) [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/st-pham.php-refactor-tool.svg
 )](https://marketplace.visualstudio.com/items?itemName=st-pham.php-refactor-tool) [![Rating](https://vsmarketplacebadge.apphb.com/rating-short/st-pham.php-refactor-tool.svg)](https://marketplace.visualstudio.com/items?itemName=st-pham.php-refactor-tool#review-details)
 
+[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/tungps881)
 - Php refactor tool help users refactor their codes easily and safely
 
 - The extension is made for object-oriented programming (OOP) in PHP
