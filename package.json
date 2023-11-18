@@ -2,8 +2,12 @@
 	"name": "php-refactor-tool",
 	"displayName": "PHP Refactor Tool",
 	"description": "Make the code refactor easier.",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/st-pham/php-refactor-tool.git"
+	},
 	"icon": "images/icon.png",
-	"version": "0.5.0",
+	"version": "0.6.0",
 	"publisher": "st-pham",
 	"author": {
 		"name": "Son Tung PHAM",
@@ -15,7 +19,7 @@
 	],
 	"license": "MIT",
 	"engines": {
-		"vscode": "^1.62.0"
+		"vscode": "^1.84.0"
 	},
 	"categories": [
 		"Other"
@@ -38,7 +42,6 @@
 	},
 	"main": "./out/src/extension.js",
 	"scripts": {
-		"vscode:prepublish": "npm run test",
 		"compile": "tsc -p ./",
 		"lint": "eslint src --ext ts",
 		"watch": "tsc -watch -p ./",

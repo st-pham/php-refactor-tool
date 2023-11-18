@@ -1,6 +1,6 @@
 # PHP Refactor Tool
 
-[![Latest Release](https://vsmarketplacebadges.dev/version-short/st-pham.php-refactor-tool.svg)](https://marketplace.visualstudio.com/items?itemName=st-pham.php-refactor-tool) [![Downloads](https://vsmarketplacebadges.dev/downloads-short/st-pham.php-refactor-tool.svg)](https://marketplace.visualstudio.com/items?itemName=st-pham.php-refactor-tool) [![Rating](https://vsmarketplacebadges.dev/rating-short/st-pham.php-refactor-tool.svg)](https://marketplace.visualstudio.com/items?itemName=st-pham.php-refactor-tool#review-details)
+[![Latest Release](https://vsmarketplacebadges.dev/version-short/st-pham.php-refactor-tool.png)](https://marketplace.visualstudio.com/items?itemName=st-pham.php-refactor-tool) [![Downloads](https://vsmarketplacebadges.dev/downloads-short/st-pham.php-refactor-tool.png)](https://marketplace.visualstudio.com/items?itemName=st-pham.php-refactor-tool) [![Rating](https://vsmarketplacebadges.dev/rating-short/st-pham.php-refactor-tool.png)](https://marketplace.visualstudio.com/items?itemName=st-pham.php-refactor-tool#review-details)
 
 If this extension is useful for you, feel free to buy me a coffee, it'd give me more motivation to add more features ♥️♥️♥️
 

@@ -8,7 +8,7 @@ async function main() {
 		const extensionTestsPath = path.resolve(__dirname, './suite');
 		const testWorkspace = path.resolve(__dirname, '../../test-fixtures/test-workspace');
 
-		const vsCodeVersions = ['1.62.0'];
+		const vsCodeVersions = ['1.84.0'];
 
 		vsCodeVersions.forEach(async (version) => {
 			await runTests({
