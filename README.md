@@ -1,10 +1,16 @@
 # PHP Refactor Tool
 
-[![Latest Release](https://vsmarketplacebadge.apphb.com/version-short/st-pham.php-refactor-tool.svg
-)](https://marketplace.visualstudio.com/items?itemName=st-pham.php-refactor-tool) [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/st-pham.php-refactor-tool.svg
-)](https://marketplace.visualstudio.com/items?itemName=st-pham.php-refactor-tool) [![Rating](https://vsmarketplacebadge.apphb.com/rating-short/st-pham.php-refactor-tool.svg)](https://marketplace.visualstudio.com/items?itemName=st-pham.php-refactor-tool#review-details)
+[![Latest Release](https://vsmarketplacebadges.dev/version-short/st-pham.php-refactor-tool.svg)](https://marketplace.visualstudio.com/items?itemName=st-pham.php-refactor-tool) [![Downloads](https://vsmarketplacebadges.dev/downloads-short/st-pham.php-refactor-tool.svg)](https://marketplace.visualstudio.com/items?itemName=st-pham.php-refactor-tool) [![Rating](https://vsmarketplacebadges.dev/rating-short/st-pham.php-refactor-tool.svg)](https://marketplace.visualstudio.com/items?itemName=st-pham.php-refactor-tool#review-details)
+
+If this extension is useful for you, feel free to buy me a coffee, it'd give me more motivation to add more features ♥️♥️♥️
 
 [!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/tungps881)
+
+You can join this discord server to discuss about current/future features more easily :)
+
+[![](https://dcbadge.vercel.app/api/server/NYMutPhV)](https://discord.gg/NYMutPhV)
+
+## Description
 - Php refactor tool help users refactor their codes easily and safely
 
 - The extension is made for object-oriented programming (OOP) in PHP
