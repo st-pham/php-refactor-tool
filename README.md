@@ -27,6 +27,9 @@ Rename Class
 Rename Method
 ![Rename Method](https://i.imgur.com/BIEGjDQ.gif)
 
+## Work in progress features
+- When moving/renaming files, change the namespace and its usages
+
 ## Installation
 
 - Install dependency extension `PHP Intelephense`

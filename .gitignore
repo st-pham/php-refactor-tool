@@ -5,3 +5,5 @@ node_modules
 out
 
 *.vsix
+
+test-workspace
